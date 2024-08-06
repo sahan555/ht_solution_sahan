@@ -42,16 +42,12 @@ const MemoryGame = () => {
   const cards = useAppSelector((state) => state.memory.cards);
   const totalAttempts = useAppSelector((state) => state.memory.totalAttempts);
   const gameComplete = useAppSelector((state) => state.memory.gameComplete);
-  const [submittedNumber, setSubmittedNumber] = useState<number | "">("");
 
   const handleSubmit = (
     values: FormValues,
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     const number = values.number as number;
-
-    setSubmittedNumber(number);
-
     if (number) {
       const newArray = [];
       for (let i = 0; i < number / 2; i++) {
