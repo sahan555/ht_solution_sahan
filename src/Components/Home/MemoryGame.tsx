@@ -122,33 +122,39 @@ const MemoryGame = () => {
               )}
             </Formik>
           </div>
-          <div className="memory-content grid grid-cols-4 gap-2">
-            {cards.map((card) => (
-              <div
-                key={card.id}
-                className={`card ${card.flipped ? "flipped" : ""} ${
-                  card.matched ? "matched" : ""
-                }`}
-                onClick={() => handleCardClick(card.id)}
-                role="button"
-                aria-label={`Card with value ${card.value}`}
-                tabIndex={0}
-              >
-                {card.flipped || card.matched ? card.value : "?"}
-              </div>
-            ))}
+          <div className="memory-content max-w-[1000px] mx-auto">
+            <div className="grid grid-cols-6 gap-2">
+              {cards.map((card) => (
+                <div
+                  key={card.id}
+                  className={`card ${card.flipped ? "flipped" : ""} ${
+                    card.matched ? "matched" : ""
+                  }`}
+                  onClick={() => handleCardClick(card.id)}
+                  role="button"
+                  aria-label={`Card-${card.value}`}
+                  tabIndex={0}
+                >
+                  {card.flipped || card.matched ? card.value : ""}
+                </div>
+              ))}
+            </div>
           </div>
         </>
       ) : (
         <div className="game-summary text-center py-10">
-          <h3 className="text-lg font-bold">Game Over!</h3>
-          <p className="text-md">Total Attempts: {totalAttempts}</p>
-          <button
-            className="btn-transparent mt-4"
-            onClick={() => handleRestart()}
-          >
-            Restart Game
-          </button>
+          <article>
+            <h3 className="text-lg font-bold">Game Over!</h3>
+            <p className="text-md">Total Attempts: {totalAttempts}</p>
+          </article>
+          <div className="btn-wrapper">
+            <button
+              className="btn-transparent mt-4"
+              onClick={() => handleRestart()}
+            >
+              Restart Game
+            </button>
+          </div>
         </div>
       )}
     </div>

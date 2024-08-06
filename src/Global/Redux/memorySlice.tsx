@@ -12,7 +12,7 @@ type MemoryState = {
   cards: Card[];
   selectedCards: number[];
   isFlipping: boolean;
-  totalAttempts: number; 
+  totalAttempts: number;
   gameComplete: boolean;
 };
 
@@ -43,7 +43,7 @@ const memorySlice = createSlice({
             firstCard.matched = true;
             state.selectedCards = [];
             if (state.cards.every((card) => card.matched)) {
-              state.gameComplete = true; 
+              state.gameComplete = true;
             }
           } else {
             state.isFlipping = true;
@@ -54,7 +54,7 @@ const memorySlice = createSlice({
     },
     resetFlippedCards(state) {
       state.cards.forEach((card) => {
-        if (!card.matched) {
+        if (!card.matched && card.flipped) {
           card.flipped = false;
         }
       });
@@ -63,10 +63,10 @@ const memorySlice = createSlice({
     },
     setCards(state, action: PayloadAction<Card[]>) {
       state.cards = action.payload;
-      state.gameComplete = false; 
+      state.gameComplete = false;
     },
     incrementAttempts(state) {
-      state.totalAttempts += 1; 
+      state.totalAttempts += 1;
     },
     restartGame(state) {
       state.cards = [];
@@ -88,16 +88,19 @@ export const {
 
 export const flipCardAsync =
   (cardId: number): AppThunk =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const { selectedCards, isFlipping, gameComplete } = getState().memory;
+
     if (isFlipping || gameComplete) return;
 
     const card = getState().memory.cards.find((card) => card.id === cardId);
     if (card) {
       dispatch(flipCardSync(cardId));
-      dispatch(incrementAttempts()); 
+      dispatch(incrementAttempts());
 
       if (selectedCards.length === 1) {
+        dispatch({ type: "memoryGame/setFlipping", payload: true });
+
         setTimeout(() => {
           const { selectedCards } = getState().memory;
           const firstCardId = selectedCards[0];
@@ -108,6 +111,8 @@ export const flipCardAsync =
           if (firstCard && card && firstCard.value !== card.value) {
             dispatch(resetFlippedCards());
           }
+
+          dispatch({ type: "memoryGame/setFlipping", payload: false });
         }, 1000);
       }
     }
