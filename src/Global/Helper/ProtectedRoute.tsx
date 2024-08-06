@@ -1,10 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAppSelector } from "../Redux/store";
 
 const ProtectedRoute = () => {
-  const token = localStorage.getItem("token");
+  const token = useAppSelector((state) => state.auth.token);
   console.log(token);
 
-  return token ? "" : <Navigate to="login" />;
+  return token ? <Outlet /> : <Navigate to="login" />;
 };
 
 export default ProtectedRoute;

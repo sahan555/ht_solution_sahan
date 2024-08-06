@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 import LoginForm from "../Components/Login/LoginForm";
+import {  useAppSelector } from "../Global/Redux/store";
 
 const Login = () => {
-  const token = localStorage.getItem("token");
+  const token = useAppSelector((state) => state.auth.token);
   if (token) {
     return <Navigate to="/" />;
   }

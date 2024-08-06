@@ -4,6 +4,51 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Roboto", sans-serif;
+@layer utilities {
+  body {
+    font-family: "Roboto", sans-serif;
+  }
+  .heading {
+    @apply font-medium text-2xl;
+  }
+  .btn-primary {
+    @apply bg-primary px-10 py-2 rounded-lg text-white font-medium hover:bg-opacity-90 duration-300;
+  }
+  .btn-transparent {
+    @apply border border-primary border-solid px-10 py-2 rounded-lg text-primary font-medium hover:bg-primary hover:text-white duration-300;
+  }
+  .error {
+    @apply text-red-500 text-sm;
+  }
+}
+.memory-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.card {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  font-size: 24px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.card.flipped, .card.matched {
+  background-color: #fff;
+  cursor: default;
+}
+
+.card.flipped {
+  color: #000;
+}
+
+.card.matched {
+  background-color: #cfc;
 }
