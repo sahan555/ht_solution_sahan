@@ -1,6 +1,4 @@
 # Memory Game
-
-## Overview
 This project is a React application built with Vite, featuring a login screen and a memory game dashboard. The application uses Redux Toolkit for state management, Tailwind CSS for styling, Formik and Yup for form validation, React Router for routing, and Axios for API calls.
 
 ## Features
